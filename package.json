@@ -1,42 +1,15 @@
 {
   "name": "@unerp/shared",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Shared types, validators, constants, and utilities",
-  "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
       "default": "./dist/index.js"
-    },
-    "./types": {
-      "types": "./dist/types/index.d.ts",
-      "default": "./dist/types/index.js"
-    },
-    "./validators": {
-      "types": "./dist/validators/index.d.ts",
-      "default": "./dist/validators/index.js"
-    },
-    "./constants": {
-      "types": "./dist/constants/index.d.ts",
-      "default": "./dist/constants/index.js"
-    },
-    "./utils": {
-      "types": "./dist/utils/index.d.ts",
-      "default": "./dist/utils/index.js"
-    },
-    "./logger": {
-      "types": "./dist/logger/index.d.ts",
-      "default": "./dist/logger/index.js"
-    },
-    "./module-registry": {
-      "types": "./dist/module-registry/index.d.ts",
-      "default": "./dist/module-registry/index.js"
-    },
-    "./hr": {
-      "types": "./dist/hr/index.d.ts",
-      "default": "./dist/hr/index.js"
     }
   },
   "scripts": {
