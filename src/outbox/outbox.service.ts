@@ -78,7 +78,7 @@ export class OutboxService {
     const destinations = this.getRegisteredDestinations(params.eventName);
     if (destinations.length > 0) {
       await tx.outboxDelivery.createMany({
-        data: destinations.map((destination) => ({
+        data: destinations.map((destination: any) => ({
           tenantId: params.tenantId,
           outboxEventId: event.id,
           destination,

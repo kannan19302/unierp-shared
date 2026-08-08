@@ -11486,7 +11486,7 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
 
 /** Every permission definition registered for a given module. */
 export function getPermissionsByModule(module: string): PermissionDefinition[] {
-  return PERMISSION_REGISTRY.filter((p) => p.module === module);
+  return PERMISSION_REGISTRY.filter((p: any) => p.module === module);
 }
 
 /** Distinct `category` labels present for a module, in first-seen order. Modules
@@ -11506,6 +11506,6 @@ export function getPermissionsByCategory(
   category: string,
 ): PermissionDefinition[] {
   return PERMISSION_REGISTRY.filter(
-    (p) => p.module === module && p.category === category,
+    (p: any) => p.module === module && p.category === category,
   );
 }

@@ -122,7 +122,7 @@ export class PolicyEngine {
    */
   static isControlPlane(permission: string): boolean {
     return CONTROL_PLANE_NAMESPACES.some(
-      (ns) =>
+      (ns: any) =>
         permission === ns ||
         permission.startsWith(`${ns}.`),
     );

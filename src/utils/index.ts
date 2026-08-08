@@ -105,7 +105,7 @@ export const CONTROL_PLANE_NAMESPACES = ["system", "platform"] as const;
 
 function isControlPlanePermission(permission: string): boolean {
   return CONTROL_PLANE_NAMESPACES.some(
-    (ns) => permission === ns || permission.startsWith(`${ns}.`),
+    (ns: any) => permission === ns || permission.startsWith(`${ns}.`),
   );
 }
 
@@ -126,7 +126,7 @@ export function hasPermission(
 ): boolean {
   const requiresControlPlane = isControlPlanePermission(requiredPermission);
 
-  return userPermissions.some((p) => {
+  return userPermissions.some((p: any) => {
     // Exact match. Safe for control-plane codes too: an exact grant is explicit.
     if (p === requiredPermission) return true;
 
@@ -212,7 +212,7 @@ export function getInitials(name: string): string {
   return name
     .split(" ")
     .filter(Boolean)
-    .map((word) => word[0]?.toUpperCase() ?? "")
+    .map((word: any) => word[0]?.toUpperCase() ?? "")
     .slice(0, 2)
     .join("");
 }

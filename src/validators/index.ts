@@ -33,7 +33,7 @@ export const dateRangeSchema = z
     to: z.string().datetime().optional(),
   })
   .refine(
-    (data) =>
+    (data: any) =>
       !data.from || !data.to || new Date(data.from) <= new Date(data.to),
     {
       message: "'from' date must be before 'to' date",
@@ -140,7 +140,7 @@ export const resetPasswordSchema = z
     password: strongPassword,
     confirmPassword: z.string(),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data: any) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
@@ -174,7 +174,7 @@ export const registerSchema = z
       }),
     }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data: any) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
