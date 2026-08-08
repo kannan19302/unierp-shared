@@ -1,4 +1,4 @@
-// @unerp/shared — Module Registry
+// @kannan19302/shared — Module Registry
 //
 // In-memory registry of `AppModuleDescriptor`s, keyed by route segment. This
 // is Phase 0 of the settings-to-SaaS-Portal migration: infrastructure only.

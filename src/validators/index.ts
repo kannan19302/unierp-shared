@@ -10,7 +10,7 @@ import { z } from "zod";
 export const cuidSchema = z.string().min(1, "ID is required");
 
 /**
- * @deprecated Track G.9 — use `listQuerySchema` from `@unerp/shared`
+ * @deprecated Track G.9 — use `listQuerySchema` from `@kannan19302/shared`
  * (contracts) for new endpoints: it is the frozen platform list contract
  * (`page`/`limit`/`sortBy`/`sortOrder`). This legacy shape (`sort`, `search`)
  * remains for existing consumers only.

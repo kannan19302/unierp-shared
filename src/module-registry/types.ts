@@ -1,4 +1,4 @@
-// @unerp/shared — Module Registry contract
+// @kannan19302/shared — Module Registry contract
 //
 // Declares nav/settings/dashboard/visibility for an app/module as data instead
 // of a hardcoded branch inside apps/web/src/navigation/moduleNav.tsx. This

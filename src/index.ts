@@ -1,4 +1,4 @@
-// @unerp/shared — Main entry point
+// @kannan19302/shared — Main entry point
 // Re-exports all shared types, validators, constants, and utilities
 
 export * from "./types/index.js";

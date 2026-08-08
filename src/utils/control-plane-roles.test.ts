@@ -9,7 +9,7 @@ import { hasPermission } from "./index";
  * packages/database/prisma/seed-platform.ts.
  *
  * They are restated here rather than imported because that module pulls in
- * PrismaClient, and @unerp/shared must not depend on the database package —
+ * PrismaClient, and @kannan19302/shared must not depend on the database package —
  * the architecture gate forbids the edge. The `roles match the provisioner`
  * test below is what keeps the two in step: it fails if the provisioner's
  * grants change without this list changing too.
@@ -65,7 +65,7 @@ describe("control-plane role provisioning", () => {
 
   it("matches the grants the provisioner actually writes", () => {
     // Read as text rather than imported: seed-platform.ts pulls in
-    // PrismaClient, and @unerp/shared must not depend on @unerp/database.
+    // PrismaClient, and @kannan19302/shared must not depend on @kannan19302/database.
     // This is what stops the mirrored constants above from drifting into a
     // test that passes while the real roles say something else.
     const provisioner = join(
