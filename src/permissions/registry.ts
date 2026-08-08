@@ -2664,6 +2664,7 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
   // across the codebase but were missing from the registry, which fails the
   // RBAC drift-check test gate. Descriptions are mechanically derived from the
   // code; refine wording opportunistically when touching a given module.
+  // Note: system.tenant.read is defined at line 2629 via p() shorthand
   {
     code: "system.tenant.create",
     module: "system",
