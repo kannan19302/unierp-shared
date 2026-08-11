@@ -2749,6 +2749,7 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     ["quota", "write", "Create quota rules and raise quota alerts"],
     ["release", "read", "View the pinned release manifest"],
     ["release", "rollback", "Roll the platform back to a previous manifest"],
+    ["release", "promote", "Promote an environment to a release manifest through the plan pipeline, with an automatic health-gated rollback"],
     ["soc", "read", "View security-operations findings across tenants"],
     ["soc", "execute", "Revoke sessions, quarantine a tenant, run breach response"],
     ["subscription", "read", "Read subscriptions across every tenant"],
