@@ -2799,6 +2799,8 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     ["staffidp", "manage", "Register a staff IdP provider or authenticate through one"],
     ["privilegeelevation", "read", "View a staff operator's privilege elevation status"],
     ["privilegeelevation", "grant", "Grant a just-in-time privilege elevation"],
+    ["estategrant", "read", "View estate ABAC grants"],
+    ["estategrant", "manage", "Create an estate ABAC grant"],
   ]),
 
   // The `saas.*` and `admin.*` codes that already guarded plane-1 routes, moved
