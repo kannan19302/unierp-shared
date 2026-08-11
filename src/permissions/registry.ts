@@ -11712,6 +11712,22 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     level: "endpoint",
     description: "Author, publish and execute runbooks (M45)",
   },
+  {
+    code: "admin.org.read",
+    module: "admin",
+    resource: "org",
+    action: "read",
+    level: "endpoint",
+    description: "View org units, positions and approval routings (D04)",
+  },
+  {
+    code: "admin.org.manage",
+    module: "admin",
+    resource: "org",
+    action: "manage",
+    level: "endpoint",
+    description: "Create org units/positions and route approvals (D04)",
+  },
 ];
 
 // ── Query helpers (role editor / access-control UI) ──
