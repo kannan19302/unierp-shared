@@ -2801,6 +2801,7 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     ["privilegeelevation", "grant", "Grant a just-in-time privilege elevation"],
     ["estategrant", "read", "View estate ABAC grants"],
     ["estategrant", "manage", "Create an estate ABAC grant"],
+    ["observability", "read", "View a correlated trace from console click to provider call"],
   ]),
 
   // The `saas.*` and `admin.*` codes that already guarded plane-1 routes, moved
