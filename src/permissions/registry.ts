@@ -2781,6 +2781,8 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     ["infrastructure", "provision", "Provision, scale, migrate or deprovision compute, storage and network resources"],
     ["certificate", "read", "View certificates by their redacted secret-ref, never the material itself"],
     ["certificate", "manage", "Issue or rotate a certificate"],
+    ["capacity", "read", "View capacity forecasts and predicted shortfalls"],
+    ["capacity", "scale", "Propose and execute a capacity scaling plan"],
   ]),
 
   // The `saas.*` and `admin.*` codes that already guarded plane-1 routes, moved
