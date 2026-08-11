@@ -2773,6 +2773,8 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     ["approval", "request", "Request two-person approval for a destructive plane-1 action"],
     ["approval", "decide", "Approve, reject or review a two-person control request — must be a different operator than the requester"],
     ["approval", "read", "View pending approvals and break-glass review tasks"],
+    ["estate", "read", "Search and list resources across the estate (M07/M15)"],
+    ["estate", "bulk", "Run a bulk plan across multiple resources in the estate"],
   ]),
 
   // The `saas.*` and `admin.*` codes that already guarded plane-1 routes, moved
