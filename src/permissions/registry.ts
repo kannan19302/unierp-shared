@@ -2779,6 +2779,8 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     ["cloudaccount", "onboard", "Onboard a cloud provider account, binding a secret-ref credential"],
     ["infrastructure", "read", "View compute, storage and network resources"],
     ["infrastructure", "provision", "Provision, scale, migrate or deprovision compute, storage and network resources"],
+    ["certificate", "read", "View certificates by their redacted secret-ref, never the material itself"],
+    ["certificate", "manage", "Issue or rotate a certificate"],
   ]),
 
   // The `saas.*` and `admin.*` codes that already guarded plane-1 routes, moved
