@@ -2789,6 +2789,10 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     ["telemetry", "write", "Record a telemetry sample for a resource"],
     ["costallocation", "read", "View cost allocation across tenant, service, resource and environment"],
     ["margin", "read", "View a tenant's gross margin, cost and revenue"],
+    ["budget", "read", "View budgets and threshold-crossing checks"],
+    ["budget", "manage", "Create or update a budget policy, including its enforcement action"],
+    ["entitlementquota", "read", "View a tenant's resource quota bound to its plan entitlements"],
+    ["entitlementquota", "sync", "Sync a tenant's resource quota from its current plan entitlements"],
   ]),
 
   // The `saas.*` and `admin.*` codes that already guarded plane-1 routes, moved
