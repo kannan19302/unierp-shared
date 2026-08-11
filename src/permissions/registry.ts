@@ -11664,6 +11664,22 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     level: "endpoint",
     description: "Execute and certify a retention deletion run (M37)",
   },
+  {
+    code: "system.integrations.read",
+    module: "system",
+    resource: "integrations",
+    action: "read",
+    level: "endpoint",
+    description: "View the platform event catalogue and replay events (M41)",
+  },
+  {
+    code: "system.integrations.manage",
+    module: "system",
+    resource: "integrations",
+    action: "manage",
+    level: "endpoint",
+    description: "Emit platform events and trigger webhook delivery (M41)",
+  },
 ];
 
 // ── Query helpers (role editor / access-control UI) ──
