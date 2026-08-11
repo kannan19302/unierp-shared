@@ -11696,6 +11696,22 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     level: "endpoint",
     description: "Provision an industry suite for a tenant from the catalogue (M44)",
   },
+  {
+    code: "system.runbook.read",
+    module: "system",
+    resource: "runbook",
+    action: "read",
+    level: "endpoint",
+    description: "Dry-run a runbook's steps (M45)",
+  },
+  {
+    code: "system.runbook.manage",
+    module: "system",
+    resource: "runbook",
+    action: "manage",
+    level: "endpoint",
+    description: "Author, publish and execute runbooks (M45)",
+  },
 ];
 
 // ── Query helpers (role editor / access-control UI) ──
