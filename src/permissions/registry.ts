@@ -2770,6 +2770,9 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     ["scale", "write", "Change enterprise-scale, isolation and residency settings"],
     ["offboarding", "read", "View tenant export and offboarding jobs"],
     ["offboarding", "write", "Export and offboard a tenant"],
+    ["approval", "request", "Request two-person approval for a destructive plane-1 action"],
+    ["approval", "decide", "Approve, reject or review a two-person control request — must be a different operator than the requester"],
+    ["approval", "read", "View pending approvals and break-glass review tasks"],
   ]),
 
   // The `saas.*` and `admin.*` codes that already guarded plane-1 routes, moved
