@@ -15,5 +15,6 @@ export * from "./pwa/index.js";
 export * from "./outbox-deep/index.js";
 export * from "./ext-gateway/index.js";
 export * from "./module-registry/index.js";
+export * from "./capability-registry/index.js";
 export * from "./inventory/index.js";
 export * from "./hr/index.js";
