@@ -2793,6 +2793,8 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     ["budget", "manage", "Create or update a budget policy, including its enforcement action"],
     ["entitlementquota", "read", "View a tenant's resource quota bound to its plan entitlements"],
     ["entitlementquota", "sync", "Sync a tenant's resource quota from its current plan entitlements"],
+    ["finops", "read", "View FinOps recommendations and their predicted/actual savings"],
+    ["finops", "execute", "Generate or execute a FinOps recommendation"],
   ]),
 
   // The `saas.*` and `admin.*` codes that already guarded plane-1 routes, moved
