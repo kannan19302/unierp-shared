@@ -11648,6 +11648,22 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     level: "endpoint",
     description: "Manage extensions (admin)",
   },
+  {
+    code: "system.retention.read",
+    module: "system",
+    resource: "retention",
+    action: "read",
+    level: "endpoint",
+    description: "View declared data retention schedules (M37)",
+  },
+  {
+    code: "system.retention.manage",
+    module: "system",
+    resource: "retention",
+    action: "manage",
+    level: "endpoint",
+    description: "Execute and certify a retention deletion run (M37)",
+  },
 ];
 
 // ── Query helpers (role editor / access-control UI) ──
