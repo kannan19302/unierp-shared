@@ -20,6 +20,24 @@ function p(
 }
 
 /**
+ * Plane-1 (control-plane) permissions — M47 / D046.
+ *
+ * Forces the `system` namespace rather than accepting it as an argument, because
+ * the namespace IS the security property here: `hasPermission` only refuses a
+ * tenant wildcard for codes inside `CONTROL_PLANE_NAMESPACES`, so a plane-1 code
+ * that drifts into `saas.*` or `admin.*` silently becomes reachable by any
+ * tenant SUPER_ADMIN. Making the namespace unspecifiable means that drift needs
+ * a deliberate edit to this function rather than a typo at a call site.
+ */
+function planeOne(
+  entries: ReadonlyArray<readonly [string, string, string]>,
+): PermissionDefinition[] {
+  return entries.map(([resource, action, description]) =>
+    p("system", resource, action, "endpoint", description),
+  );
+}
+
+/**
  * Sub-resource -> UI category label, admin module only (see
  * .ai/ADMIN_UI_ACCESS_CONTROL_SPEC.md Section 2.1). Verified against the real
  * `resource` strings already used by `p('admin', ...)` calls below, not the
@@ -2689,6 +2707,120 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     level: "endpoint",
     description: "Access Superadmin (system)",
   },
+
+  // ── M47 / D046 · plane-1 control-plane codes (2026-08-11) ──────────────────
+  //
+  // Every code below guards a route mounted under /platform/v1, which acts
+  // ACROSS tenant boundaries. They are in the `system` namespace deliberately:
+  // `CONTROL_PLANE_NAMESPACES` is ["system", "platform"], and `hasPermission`
+  // refuses to let a tenant-scoped grant — including a bare "*" — satisfy a code
+  // in one of those namespaces. That refusal is the whole mechanism.
+  //
+  // WHY NOT `saas.*`, which several of these routes used before: `saas` is a
+  // SHARED namespace. 54 tenant-plane controllers (billing, subscriptions,
+  // saas-portal, onboarding, …) are guarded by `saas.*` codes, so a tenant
+  // SUPER_ADMIN legitimately holds them. Adding `saas` to
+  // CONTROL_PLANE_NAMESPACES would have denied all 54; leaving plane-1 routes on
+  // `saas.*` meant a tenant wildcard satisfied 72 cross-tenant endpoints. The
+  // only correct fix is to move the plane-1 codes into `system.*` — the same fix
+  // already applied to tenant lifecycle when it was `admin.tenant.*`.
+  //
+  // WHY NOT `admin.*` for the operations dashboard: `admin.operations.read` is
+  // deliberately tenant-scoped and there is a regression suite asserting it
+  // (modules/admin/tests/rbac-regression-sweep.spec.ts) — a tenant admin must
+  // keep reaching /admin/operations/jobs. It must not reach /platform/v1/operations.
+  ...planeOne([
+    ["broadcast", "read", "View maintenance windows and platform broadcasts"],
+    ["broadcast", "write", "Schedule, cancel and send platform-wide broadcasts"],
+    ["import", "read", "View provider-assisted tenant import jobs"],
+    ["import", "write", "Validate and execute provider-assisted tenant imports"],
+    ["dunning", "read", "View dunning and collections state for any tenant"],
+    ["dunning", "execute", "Run or recover a dunning ladder against any tenant"],
+    ["invoice", "read", "Read invoices across every tenant"],
+    ["invoice", "write", "Issue credit notes and adjustments against any invoice"],
+    ["upgrade", "read", "View live tenant upgrade status and compatibility"],
+    ["upgrade", "execute", "Upgrade a running tenant to another release train"],
+    ["upgrade", "rollback", "Roll a tenant back to its previous release train"],
+    ["metering", "read", "Read metered usage and raw events for any tenant"],
+    ["metering", "write", "Emit or reconcile metering events for any tenant"],
+    ["plan", "read", "View platform plans and price books"],
+    ["plan", "write", "Create or amend platform plans and prices"],
+    ["quota", "read", "View quota rules and per-tenant quota consumption"],
+    ["quota", "write", "Create quota rules and raise quota alerts"],
+    ["release", "read", "View the pinned release manifest"],
+    ["release", "rollback", "Roll the platform back to a previous manifest"],
+    ["soc", "read", "View security-operations findings across tenants"],
+    ["soc", "execute", "Revoke sessions, quarantine a tenant, run breach response"],
+    ["subscription", "read", "Read subscriptions across every tenant"],
+    ["subscription", "write", "Transition, pause, resume or cancel any subscription"],
+    ["support", "read", "View support context, tickets and session replay for any tenant"],
+    ["support", "write", "Resolve support tickets on behalf of any tenant"],
+    ["migration", "read", "View tenant migration jobs"],
+    ["migration", "execute", "Rehearse, start or complete a tenant migration"],
+    ["migration", "rollback", "Roll back an in-flight tenant migration"],
+    ["cluster", "read", "View cluster routing rules and the cluster fleet"],
+    ["cluster", "write", "Create or amend cluster routing rules"],
+    ["flags", "read", "Read feature flags and entitlement overrides for any tenant"],
+    ["flags", "write", "Set feature flags and entitlement overrides for any tenant"],
+    ["reseller", "read", "View reseller and channel-partner accounts"],
+    ["reseller", "write", "Create or amend reseller accounts and commission terms"],
+    ["whitelabel", "read", "View per-tenant branding, domains and sender identity"],
+    ["whitelabel", "write", "Provision per-tenant domains, branding and certificates"],
+    ["scale", "read", "View enterprise-scale posture across the estate"],
+    ["scale", "write", "Change enterprise-scale, isolation and residency settings"],
+    ["offboarding", "read", "View tenant export and offboarding jobs"],
+    ["offboarding", "write", "Export and offboard a tenant"],
+  ]),
+
+  // The `saas.*` and `admin.*` codes that already guarded plane-1 routes, moved
+  // into `system.*` with resource and action preserved 1:1 so no authorisation
+  // decision changes shape — only which namespace it lives in, which is the
+  // whole point: `saas.*` and `admin.*` are shared with the tenant plane, so a
+  // tenant SUPER_ADMIN's `["*"]` satisfied all 72 of them.
+  //
+  // The `saas.*` originals are deliberately NOT removed from the registry: 54
+  // tenant-plane controllers still use them legitimately.
+  ...planeOne([
+    ["operations", "update", "Act on the platform operations dashboard"],
+    ["addons", "read", "View platform add-ons"],
+    ["addons", "write", "Create or amend platform add-ons"],
+    ["audit", "read", "Read the platform audit trail across tenants"],
+    ["audit", "write", "Annotate or export the platform audit trail"],
+    ["backup", "read", "View platform and per-tenant backup state"],
+    ["backup", "write", "Trigger platform and per-tenant backups"],
+    ["billing", "read", "Read billing configuration across tenants"],
+    ["billing", "write", "Change billing configuration for any tenant"],
+    ["clusters", "read", "View multi-tenant clusters"],
+    ["clusters", "create", "Create a multi-tenant cluster"],
+    ["clusters", "update", "Change cluster membership or routing"],
+    ["domain", "read", "View platform and per-tenant domains"],
+    ["domain", "write", "Provision or retire a domain"],
+    ["federation", "read", "View identity federation configuration"],
+    ["federation", "write", "Change identity federation configuration"],
+    ["flags", "admin", "Administer feature flags platform-wide"],
+    ["isolation", "read", "View tenant isolation posture"],
+    ["isolation", "write", "Change tenant isolation posture"],
+    ["metering", "admin", "Administer metering configuration platform-wide"],
+    ["metering", "update", "Amend metered quantities"],
+    ["oauth", "read", "View platform OAuth clients"],
+    ["oauth", "write", "Create or revoke platform OAuth clients"],
+    ["pricing", "read", "View price books"],
+    ["pricing", "write", "Amend price books"],
+    ["ratelimit", "read", "View per-tenant rate limits"],
+    ["ratelimit", "write", "Change per-tenant rate limits"],
+    ["resellers", "read", "View reseller accounts"],
+    ["resellers", "create", "Create a reseller account"],
+    ["resellers", "update", "Amend a reseller account"],
+    ["residency", "read", "View data-residency assignments"],
+    ["residency", "write", "Change a tenant's data residency"],
+    ["security", "read", "View platform security posture"],
+    ["security", "write", "Change platform security posture"],
+    ["sla", "read", "View SLA and SLO definitions"],
+    ["sla", "write", "Amend SLA and SLO definitions"],
+    ["sla", "admin", "Administer SLA credits and breaches"],
+    ["whitelabel", "create", "Provision white-label branding for a tenant"],
+    ["whitelabel", "update", "Amend white-label branding for a tenant"],
+  ]),
   // Tenant lifecycle. These were `admin.tenant.*` until 2026-08-02, which the
   // seeded tenant ADMIN role satisfied through its `admin.*` grant — so any
   // customer's admin could suspend, export or offboard any other tenant by id
