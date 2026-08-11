@@ -2785,6 +2785,8 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     ["capacity", "scale", "Propose and execute a capacity scaling plan"],
     ["cost", "read", "View ingested provider billing and cost data"],
     ["cost", "ingest", "Ingest a provider's billing export for a period"],
+    ["telemetry", "read", "View real-time resource utilisation and consumption"],
+    ["telemetry", "write", "Record a telemetry sample for a resource"],
   ]),
 
   // The `saas.*` and `admin.*` codes that already guarded plane-1 routes, moved
