@@ -2783,6 +2783,8 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     ["certificate", "manage", "Issue or rotate a certificate"],
     ["capacity", "read", "View capacity forecasts and predicted shortfalls"],
     ["capacity", "scale", "Propose and execute a capacity scaling plan"],
+    ["cost", "read", "View ingested provider billing and cost data"],
+    ["cost", "ingest", "Ingest a provider's billing export for a period"],
   ]),
 
   // The `saas.*` and `admin.*` codes that already guarded plane-1 routes, moved
