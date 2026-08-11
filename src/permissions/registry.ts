@@ -11680,6 +11680,22 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     level: "endpoint",
     description: "Emit platform events and trigger webhook delivery (M41)",
   },
+  {
+    code: "system.catalogue.read",
+    module: "system",
+    resource: "catalogue",
+    action: "read",
+    level: "endpoint",
+    description: "View composed/priced industry suites (M44)",
+  },
+  {
+    code: "system.catalogue.manage",
+    module: "system",
+    resource: "catalogue",
+    action: "manage",
+    level: "endpoint",
+    description: "Provision an industry suite for a tenant from the catalogue (M44)",
+  },
 ];
 
 // ── Query helpers (role editor / access-control UI) ──
