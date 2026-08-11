@@ -2795,6 +2795,10 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     ["entitlementquota", "sync", "Sync a tenant's resource quota from its current plan entitlements"],
     ["finops", "read", "View FinOps recommendations and their predicted/actual savings"],
     ["finops", "execute", "Generate or execute a FinOps recommendation"],
+    ["staffidp", "read", "View registered staff IdP providers"],
+    ["staffidp", "manage", "Register a staff IdP provider or authenticate through one"],
+    ["privilegeelevation", "read", "View a staff operator's privilege elevation status"],
+    ["privilegeelevation", "grant", "Grant a just-in-time privilege elevation"],
   ]),
 
   // The `saas.*` and `admin.*` codes that already guarded plane-1 routes, moved
