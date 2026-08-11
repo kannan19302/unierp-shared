@@ -2775,6 +2775,7 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     ["approval", "read", "View pending approvals and break-glass review tasks"],
     ["estate", "read", "Search and list resources across the estate (M07/M15)"],
     ["estate", "bulk", "Run a bulk plan across multiple resources in the estate"],
+    ["cloudaccount", "onboard", "Onboard a cloud provider account, binding a secret-ref credential"],
   ]),
 
   // The `saas.*` and `admin.*` codes that already guarded plane-1 routes, moved
