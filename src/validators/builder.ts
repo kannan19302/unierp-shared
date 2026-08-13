@@ -349,6 +349,38 @@ export type UpdateBuilderWorkflowInput = z.infer<
   typeof updateBuilderWorkflowSchema
 >;
 
+// ─── Builder Workflow Runtime ───
+// G11 — a run is one execution attempt of a workflow definition. The run's
+// steps are recorded per node so every run is inspectable step by step, and a
+// failed run can be resumed from the failing step.
+export const executeBuilderWorkflowRunSchema = z.object({
+  // Payload the run starts with; node conditions and webhooks may read it.
+  input: z.record(z.unknown()).optional().default({}),
+  trigger: z
+    .enum(["MANUAL", "WEBHOOK", "SCHEDULE"])
+    .optional()
+    .default("MANUAL"),
+});
+export type ExecuteBuilderWorkflowRunInput = z.infer<
+  typeof executeBuilderWorkflowRunSchema
+>;
+
+export const resumeBuilderWorkflowRunSchema = z.object({
+  input: z.record(z.unknown()).optional().default({}),
+});
+export type ResumeBuilderWorkflowRunInput = z.infer<
+  typeof resumeBuilderWorkflowRunSchema
+>;
+
+// G11 — human-task approval/rejection for an approval node in a run.
+export const approveBuilderWorkflowRunStepSchema = z.object({
+  approved: z.boolean(),
+  comment: z.string().optional(),
+});
+export type ApproveBuilderWorkflowRunStepInput = z.infer<
+  typeof approveBuilderWorkflowRunStepSchema
+>;
+
 // ── Builder Dashboard ──
 export const createBuilderDashboardSchema = z.object({
   name: z.string().min(1),
