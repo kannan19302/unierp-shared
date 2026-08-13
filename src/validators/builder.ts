@@ -36,6 +36,41 @@ export type BuilderAnalyticsEventInput = z.infer<
 >;
 
 // ── Builder Form ──
+
+/** G10 — one step of a multi-step form. `fieldIds` reference `builderFieldSchema.id`. */
+export const builderFormPageSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(1),
+  order: z.number().int().min(0),
+  fieldIds: z.array(z.string()).default([]),
+});
+export type BuilderFormPageInput = z.infer<typeof builderFormPageSchema>;
+
+/**
+ * G10 — conditional visibility/requirement. `fieldId` is the field whose
+ * current value is evaluated; `targetFieldId` is the field the action
+ * applies to. Kept as its own schema (not reused from AdvancedForm/
+ * FormCondition, which store the identical shape) because those are a
+ * separate, unrelated model — see `builder-advanced-forms.service.ts`'s doc.
+ */
+export const builderFormConditionSchema = z.object({
+  fieldId: z.string().min(1),
+  operator: z.enum([
+    "equals",
+    "notEquals",
+    "contains",
+    "greaterThan",
+    "lessThan",
+    "isEmpty",
+  ]),
+  value: z.string().optional(),
+  action: z.enum(["show", "hide", "enable", "disable", "require"]),
+  targetFieldId: z.string().min(1),
+});
+export type BuilderFormConditionInput = z.infer<
+  typeof builderFormConditionSchema
+>;
+
 export const createBuilderFormSchema = z.object({
   name: z.string().min(1),
   slug: z.string().min(1),
@@ -44,6 +79,8 @@ export const createBuilderFormSchema = z.object({
   module: z.string().optional(),
   status: z.string().optional(),
   fields: z.array(builderFieldSchema).optional(),
+  pages: z.array(builderFormPageSchema).max(50).optional(),
+  conditions: z.array(builderFormConditionSchema).max(200).optional(),
   settings: z.record(z.unknown()).optional(),
 });
 export type CreateBuilderFormInput = z.infer<typeof createBuilderFormSchema>;
