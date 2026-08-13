@@ -70,6 +70,51 @@ export type UpdateSchemaRegistryInput = z.infer<
   typeof updateSchemaRegistrySchema
 >;
 
+// ── Custom Object (Data Object Builder, G09) ──
+//
+// Deliberately stricter than `builderFieldSchema` above: this shape is
+// Zod-validated and then re-validated against `IDENTIFIER`/`PG_TYPE`
+// (`@kannan19302/extension-api`) before it can reach DDL, so `type` is a
+// closed enum here too — a field the platform cannot safely turn into a
+// column can never be submitted in the first place, not just rejected late.
+export const CUSTOM_OBJECT_FIELD_TYPES = [
+  "string",
+  "text",
+  "int",
+  "decimal",
+  "boolean",
+  "datetime",
+  "json",
+] as const;
+
+const CUSTOM_OBJECT_IDENTIFIER = /^[a-z][a-z0-9_]{0,48}$/;
+
+export const customObjectFieldSchema = z.object({
+  name: z
+    .string()
+    .regex(CUSTOM_OBJECT_IDENTIFIER, "field name must be lower_snake_case"),
+  label: z.string().min(1).max(200),
+  type: z.enum(CUSTOM_OBJECT_FIELD_TYPES),
+  required: z.boolean().default(false),
+  indexed: z.boolean().default(false),
+});
+export type CustomObjectFieldInput = z.infer<typeof customObjectFieldSchema>;
+
+export const createCustomObjectSchema = z.object({
+  apiName: z
+    .string()
+    .regex(CUSTOM_OBJECT_IDENTIFIER, "apiName must be lower_snake_case"),
+  label: z.string().min(1).max(200),
+  description: z.string().max(2000).optional(),
+  fields: z.array(customObjectFieldSchema).min(1).max(64),
+});
+export type CreateCustomObjectInput = z.infer<typeof createCustomObjectSchema>;
+
+export const addCustomObjectFieldSchema = customObjectFieldSchema;
+export type AddCustomObjectFieldInput = z.infer<
+  typeof addCustomObjectFieldSchema
+>;
+
 // ── Page Registry ──
 export const createPageRegistrySchema = z.object({
   schemaId: z.string().optional(),
