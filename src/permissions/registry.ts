@@ -11761,6 +11761,22 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     description: "Run control monitoring and export evidence artefacts from the audit spine (M38)",
   },
   {
+    code: "system.ai.read",
+    module: "system",
+    resource: "ai",
+    action: "read",
+    level: "endpoint",
+    description: "View AI provider models, guardrail policies, eval suites and registrations (M39)",
+  },
+  {
+    code: "system.ai.manage",
+    module: "system",
+    resource: "ai",
+    action: "manage",
+    level: "endpoint",
+    description: "Register AI providers/models, manage guardrails, run eval suites and invoke the AI gateway (M39)",
+  },
+  {
     code: "admin.org.read",
     module: "admin",
     resource: "org",
