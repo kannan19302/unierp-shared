@@ -11745,6 +11745,22 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     description: "Author, publish and execute runbooks (M45)",
   },
   {
+    code: "system.compliance.read",
+    module: "system",
+    resource: "compliance",
+    action: "read",
+    level: "endpoint",
+    description: "View the compliance control catalogue, monitoring status and exported evidence (M38)",
+  },
+  {
+    code: "system.compliance.manage",
+    module: "system",
+    resource: "compliance",
+    action: "manage",
+    level: "endpoint",
+    description: "Run control monitoring and export evidence artefacts from the audit spine (M38)",
+  },
+  {
     code: "admin.org.read",
     module: "admin",
     resource: "org",
