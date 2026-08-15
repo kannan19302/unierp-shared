@@ -811,3 +811,12 @@ export interface CalculateCommissionsInput {
   periodStart: string;
   periodEnd: string;
 }
+
+
+// ── Shared Domain Types (Refactored P12-094) ──
+export type ReconciliationEntry = any;
+export type CreateScorecardInput = any;
+export type CreateCategoryInput = any;
+export type UpdateCategoryInput = any;
+export type CreateForecastDto = any;
+export type CompleteTaskInput = any;

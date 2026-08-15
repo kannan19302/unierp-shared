@@ -518,3 +518,95 @@ export type CreateWebSeoInput = z.infer<typeof createWebSeoSchema>;
 
 export const updateWebSeoSchema = createWebSeoSchema.partial();
 export type UpdateWebSeoInput = z.infer<typeof updateWebSeoSchema>;
+
+// ─── Rules Engine (G13) ──────────────────────────────────────────────
+// Decision Tables — tabular decision logic with hit policies
+export const decisionTableInputSchema = z.object({
+  name: z.string().min(1).max(200),
+  label: z.string().min(1).max(200),
+  type: z.enum(["string", "number", "boolean", "date", "enum"]),
+  values: z.array(z.string()).optional(),
+});
+export type DecisionTableInputInput = z.infer<typeof decisionTableInputSchema>;
+
+export const decisionTableOutputSchema = z.object({
+  name: z.string().min(1).max(200),
+  label: z.string().min(1).max(200),
+  type: z.enum(["string", "number", "boolean", "date", "enum"]),
+});
+export type DecisionTableOutputInput = z.infer<typeof decisionTableOutputSchema>;
+
+export const decisionTableRuleSchema = z.object({
+  id: z.string().optional(),
+  priority: z.number().int().default(0),
+  inputValues: z.array(z.unknown()).default([]),
+  outputValues: z.array(z.unknown()).default([]),
+  description: z.string().optional(),
+  status: z.enum(["ACTIVE", "INACTIVE"]).default("ACTIVE"),
+});
+export type DecisionTableRuleInput = z.infer<typeof decisionTableRuleSchema>;
+
+export const decisionTableSettingsSchema = z.object({
+  errorHandling: z.enum(["throw", "default", "log"]).default("throw"),
+  defaultOutput: z.record(z.unknown()).optional(),
+  logging: z.boolean().default(true),
+});
+export type DecisionTableSettingsInput = z.infer<typeof decisionTableSettingsSchema>;
+
+export const createDecisionTableSchema = z.object({
+  name: z.string().min(1).max(200),
+  description: z.string().max(2000).optional(),
+  status: z.enum(["DRAFT", "ACTIVE", "ARCHIVED"]).default("DRAFT"),
+  priority: z.number().int().default(1000),
+  hitPolicy: z.enum(["FIRST", "ANY", "ALL", "UNIQUE", "PRIORITY"]).default("FIRST"),
+  inputs: z.array(decisionTableInputSchema).default([]),
+  outputs: z.array(decisionTableOutputSchema).default([]),
+  rules: z.array(decisionTableRuleSchema).default([]),
+  settings: decisionTableSettingsSchema.optional(),
+});
+export type CreateDecisionTableInput = z.infer<typeof createDecisionTableSchema>;
+
+export const updateDecisionTableSchema = createDecisionTableSchema.partial();
+export type UpdateDecisionTableInput = z.infer<typeof updateDecisionTableSchema>;
+
+// Rule Sets — DSL-based rules with priority and versioning
+export const ruleSetSettingsSchema = z.object({
+  evaluationMode: z.enum(["firstMatch", "allMatches", "priority"]).default("firstMatch"),
+  caching: z.boolean().default(false),
+  errorHandling: z.enum(["throw", "default", "log"]).default("throw"),
+});
+export type RuleSetSettingsInput = z.infer<typeof ruleSetSettingsSchema>;
+
+export const createRuleSetSchema = z.object({
+  name: z.string().min(1).max(200),
+  description: z.string().max(2000).optional(),
+  status: z.enum(["DRAFT", "ACTIVE", "ARCHIVED"]).default("DRAFT"),
+  settings: ruleSetSettingsSchema.optional(),
+});
+export type CreateRuleSetInput = z.infer<typeof createRuleSetSchema>;
+
+export const updateRuleSetSchema = createRuleSetSchema.partial();
+export type UpdateRuleSetInput = z.infer<typeof updateRuleSetSchema>;
+
+export const ruleDefinitionSchema = z.object({
+  name: z.string().min(1).max(200),
+  description: z.string().max(2000).optional(),
+  priority: z.number().int().default(0),
+  condition: z.string().min(1), // DSL expression
+  actions: z.array(z.record(z.unknown())).default([]),
+  status: z.enum(["ACTIVE", "INACTIVE"]).default("ACTIVE"),
+});
+export type RuleDefinitionInput = z.infer<typeof ruleDefinitionSchema>;
+
+// Rule Evaluation — input for testing/evaluating rules
+export const evaluateRulesSchema = z.object({
+  input: z.record(z.unknown()).default({}),
+  triggeredBy: z.string().optional(),
+});
+export type EvaluateRulesInput = z.infer<typeof evaluateRulesSchema>;
+
+// Rule Versioning — for test-before-deploy
+export const versionRuleSetSchema = z.object({
+  changelog: z.string().optional(),
+});
+export type VersionRuleSetInput = z.infer<typeof versionRuleSetSchema>;
