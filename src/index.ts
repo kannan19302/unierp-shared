@@ -12,3 +12,4 @@ export * from "./numbering/index.js";
 export * from "./outbox-deep/index.js";
 export * from "./module-registry/index.js";
 export * from "./capability-registry/index.js";
+export * from "./temporal/index.js";

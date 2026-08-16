@@ -21,6 +21,8 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
+    "date-fns": "^4.4.0",
+    "date-fns-tz": "^3.2.0",
     "zod": "^3.24.0"
   },
   "devDependencies": {
