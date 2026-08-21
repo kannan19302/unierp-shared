@@ -70,7 +70,12 @@ describe("control-plane role provisioning", () => {
     // test that passes while the real roles say something else.
     const provisioner = join(
       dirname(fileURLToPath(import.meta.url)),
-      "../../../database/prisma/seed-platform.ts",
+      // ../../data, not ../../database: the package directory was renamed from
+      // `database` to `data` and this path was not updated, so existsSync went
+      // false and the guard below failed on every run. The whole point of this
+      // test is to catch the mirrored constants drifting from the provisioner,
+      // and it could not read the provisioner at all.
+      "../../../data/prisma/seed-platform.ts",
     );
     expect(
       existsSync(provisioner),
