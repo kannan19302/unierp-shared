@@ -225,6 +225,64 @@ export function useTenant(): { tenantId: string | null } {
 }
 
 /**
+ * Returns the current access token as an `Authorization` header object.
+ *
+ * Drop-in replacement for the legacy `localStorage.getItem("token")` pattern
+ * that was scattered across dozens of components. The token lives in memory
+ * only (see this file's top comment), so this is the ONLY correct way for a
+ * React component to get an auth header — reading localStorage re-introduces
+ * the XSS exposure this whole design exists to prevent.
+ */
+export function useAuthHeaders(): {
+  getAuthHeaders: () => HeadersInit;
+  getToken: () => string | null;
+} {
+  const { getAccessToken } = useSession();
+  return {
+    getAuthHeaders: useCallback((): HeadersInit => {
+      const token = getAccessToken();
+      return {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      };
+    }, [getAccessToken]),
+    getToken: getAccessToken,
+  };
+}
+
+/**
+ * A `fetch` wrapper that automatically injects the in-memory access token.
+ *
+ * This is the recommended replacement for every component that used to do:
+ *   `const token = localStorage.getItem("token");`
+ *   `fetch(url, { headers: { Authorization: \`Bearer \${token}\` } })`
+ *
+ * Usage:
+ *   const authFetch = useAuthFetch();
+ *   const data = await authFetch("/api/v1/some/resource");
+ */
+export function useAuthFetch(): (
+  url: string,
+  init?: RequestInit,
+) => Promise<Response> {
+  const { getAccessToken } = useSession();
+  return useCallback(
+    (url: string, init?: RequestInit) => {
+      const token = getAccessToken();
+      const headers = new Headers(init?.headers);
+      if (token && !headers.has("Authorization")) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      if (!headers.has("Content-Type")) {
+        headers.set("Content-Type", "application/json");
+      }
+      return fetch(url, { ...init, headers, credentials: "include" });
+    },
+    [getAccessToken],
+  );
+}
+
+/**
  * `<RequireSession>` — the client-side enforcement point every platform
  * shares, proven live in the Global Platform Wizard (W4) before being reused
  * here for the other eight platforms (W6).
