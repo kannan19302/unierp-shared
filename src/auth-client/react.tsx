@@ -153,15 +153,18 @@ export function UniErpAuthProvider(props: UniErpAuthProviderProps): ReactElement
   const signOut = useCallback(
     (options?: { postLogoutRedirectUri?: string }) => {
       if (refreshTimer.current) clearTimeout(refreshTimer.current);
-      setTokens(null);
-      setStatus("unauthenticated");
-      window.location.assign(
-        client.buildLogoutUrl(
-          options?.postLogoutRedirectUri ??
-            props.defaultPostLogoutRedirectUri ??
-            "http://localhost:4000/",
-        ),
+      const logoutUrl = client.buildLogoutUrl(
+        options?.postLogoutRedirectUri ??
+          props.defaultPostLogoutRedirectUri ??
+          "http://localhost:4000/",
       );
+
+      // Navigate without first publishing `unauthenticated`. Otherwise a
+      // <RequireSession> consumer can observe that intermediate state, launch
+      // a new authorization request, and overwrite /oidc/end_session before
+      // the IdP revokes the shared session. `replace` also keeps the protected
+      // page out of browser history after logout.
+      window.location.replace(logoutUrl);
     },
     [client, props.defaultPostLogoutRedirectUri],
   );

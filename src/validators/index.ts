@@ -209,6 +209,89 @@ export type OnboardingChecklistResponse = z.infer<
   typeof onboardingChecklistResponseSchema
 >;
 
+export const onboardingWizardStepEnum = z.enum([
+  "ORGANIZATION_PROFILE",
+  "INDUSTRY_BLUEPRINT",
+  "LOCALIZATION_FINANCE",
+  "TEAM_INVITATION",
+  "DATA_INGESTION",
+  "REVIEW_COMPLETE",
+]);
+export type OnboardingWizardStep = z.infer<typeof onboardingWizardStepEnum>;
+
+export const saveWizardStepSchema = z.object({
+  step: onboardingWizardStepEnum,
+  data: z.record(z.string(), z.any()),
+});
+export type SaveWizardStepInput = z.infer<typeof saveWizardStepSchema>;
+
+export const applyIndustryBlueprintSchema = z.object({
+  industry: z.string().min(1),
+  apps: z.array(z.string()),
+  chartOfAccountsTemplate: z.string().default("GAAP_STANDARD"),
+});
+export type ApplyIndustryBlueprintInput = z.infer<
+  typeof applyIndustryBlueprintSchema
+>;
+
+export const masterDataEntityTypeEnum = z.enum([
+  "CUSTOMER",
+  "VENDOR",
+  "ITEM",
+  "GL_ACCOUNT",
+  "OPENING_BALANCE",
+  "EMPLOYEE",
+]);
+export type MasterDataEntityType = z.infer<typeof masterDataEntityTypeEnum>;
+
+export const executeMasterDataImportSchema = z.object({
+  entityType: masterDataEntityTypeEnum,
+  fileName: z.string(),
+  fieldMappings: z.record(z.string(), z.string()),
+  rows: z.array(z.record(z.string(), z.any())).min(1, "At least one data row is required"),
+  dryRun: z.boolean().default(false),
+});
+export type ExecuteMasterDataImportInput = z.infer<
+  typeof executeMasterDataImportSchema
+>;
+
+export const onboardingWizardStateSchema = z.object({
+  tenantId: z.string(),
+  currentStep: onboardingWizardStepEnum,
+  completedSteps: z.array(z.string()),
+  percentComplete: z.number().min(0).max(100),
+  isCompleted: z.boolean(),
+  organization: z.object({
+    name: z.string(),
+    legalName: z.string().optional(),
+    taxId: z.string().optional(),
+    currency: z.string().default("USD"),
+    timezone: z.string().default("UTC"),
+    fiscalYearStart: z.number().default(1),
+  }).optional(),
+  industryBlueprint: z.object({
+    industry: z.string(),
+    selectedApps: z.array(z.string()),
+    chartOfAccountsTemplate: z.string(),
+  }).optional(),
+  teamInvites: z.array(
+    z.object({
+      email: z.string().email(),
+      role: z.string(),
+      firstName: z.string().optional(),
+      lastName: z.string().optional(),
+    })
+  ).default([]),
+  dataImportSummary: z.object({
+    customersImported: z.number().default(0),
+    vendorsImported: z.number().default(0),
+    itemsImported: z.number().default(0),
+    accountsImported: z.number().default(0),
+  }).default({}),
+});
+export type OnboardingWizardState = z.infer<typeof onboardingWizardStateSchema>;
+
+
 // ── Organization Schemas ──
 
 export const createOrganizationSchema = z.object({
