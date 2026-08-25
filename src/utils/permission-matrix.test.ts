@@ -116,6 +116,13 @@ describe("hasPermission — permission matrix", () => {
       expect(hasPermission(["platform.*"], "platform.billing.update")).toBe(
         true,
       );
+      expect(hasPermission(["pcc.*"], "pcc.security.access")).toBe(true);
+    });
+
+    it("keeps PCC provider-only while OCC remains tenant-scoped", () => {
+      expect(hasPermission(["*"], "pcc.identity-governance.access")).toBe(false);
+      expect(hasPermission(["occ.*"], "pcc.security.access")).toBe(false);
+      expect(hasPermission(["*"], "occ.access-governance.access")).toBe(true);
     });
 
     it("a control-plane grant does not confer unrelated tenant permissions", () => {

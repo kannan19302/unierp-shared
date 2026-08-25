@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@kannan19302/contracts':
+        specifier: file:../unierp-contracts
+        version: file:../unierp-contracts
       date-fns:
         specifier: ^4.4.0
         version: 4.4.0
@@ -233,6 +236,9 @@ packages:
 
   '@kannan19302/config@1.0.2':
     resolution: {integrity: sha512-mJIQyBTKUduysyrQ1F5KB5+Fd2rjetHllQRDvKEFM3TvSm/7oG0cBsZH4M0Bwa5ifuqWkzJbjotZmYHhfUPeTQ==}
+
+  '@kannan19302/contracts@file:../unierp-contracts':
+    resolution: {directory: ../unierp-contracts, type: directory}
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     resolution: {integrity: sha512-oTXEIha4SsuXdTA4Iyskj0kpdx2yVXdhd75c2v3xGrHFfVMsbhTPZU/nMPL4sWKo4pBHm3aucLaqGlF696dTyQ==}
@@ -939,6 +945,8 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.5
 
   '@kannan19302/config@1.0.2': {}
+
+  '@kannan19302/contracts@file:../unierp-contracts': {}
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true

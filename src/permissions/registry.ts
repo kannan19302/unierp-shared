@@ -1,4 +1,5 @@
 import type { PermissionDefinition, PermissionLevel } from "../types";
+import { CONTROL_CENTER_APPS } from "@kannan19302/contracts";
 
 function p(
   module: string,
@@ -37,6 +38,28 @@ function planeOne(
   );
 }
 
+/** App-entry permissions are derived from the L0 control-center catalogue. */
+function controlCenterAppAccessPermissions(): PermissionDefinition[] {
+  return CONTROL_CENTER_APPS.map((app) => {
+    const [module, resource] = app.permissionNamespace.split(".");
+    if (!module || !resource) {
+      throw new Error(
+        `Invalid control-center permission namespace: ${app.permissionNamespace}`,
+      );
+    }
+    return p(
+      module,
+      resource,
+      "access",
+      "endpoint",
+      `Access ${app.name} (${app.id})`,
+      app.center === "PCC"
+        ? "Provider Control Center"
+        : "Organization Control Center",
+    );
+  });
+}
+
 /**
  * Sub-resource -> UI category label, admin module only (see
  * .ai/ADMIN_UI_ACCESS_CONTROL_SPEC.md Section 2.1). Verified against the real
@@ -56,6 +79,7 @@ function admin(
 }
 
 export const PERMISSION_REGISTRY: PermissionDefinition[] = [
+  ...controlCenterAppAccessPermissions(),
   // Admin
   admin("user", "read", "endpoint", "View users", "Users & Roles"),
   admin("user", "create", "endpoint", "Create users", "Users & Roles"),

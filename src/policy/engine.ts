@@ -7,8 +7,8 @@
  * it reaches a guard at runtime.
  *
  * § C02 of the Track-C implementation plan defines the control-plane staff
- * roles whose permissions are assigned exclusively from the `system.*` and
- * `platform.*` namespaces. Those namespaces are the authoritative list in
+ * roles whose permissions are assigned exclusively from the `system.*`,
+ * `platform.*`, and `pcc.*` namespaces. Those namespaces are authoritative in
  * `CONTROL_PLANE_NAMESPACES`; nothing in a `tenant.*` or `admin.*` or `saas.*`
  * namespace is ever granted to a provider-staff role.
  */
@@ -56,6 +56,7 @@ export const CONTROL_PLANE_ROLE_PERMISSIONS: Record<
   string[]
 > = {
   [CONTROL_PLANE_ROLE.PLATFORM_ADMIN]: [
+    "pcc.*",
     "system.tenant.read",
     "system.tenant.create",
     "system.tenant.update",
@@ -95,6 +96,8 @@ export const CONTROL_PLANE_ROLE_PERMISSIONS: Record<
     "system.analytics.read",
   ],
   [CONTROL_PLANE_ROLE.SECURITY]: [
+    "pcc.security.access",
+    "pcc.identity-governance.access",
     "system.tenant.read",
     "system.health.read",
     "system.analytics.read",

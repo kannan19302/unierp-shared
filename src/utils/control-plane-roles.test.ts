@@ -14,11 +14,38 @@ import { hasPermission } from "./index";
  * test below is what keeps the two in step: it fails if the provisioner's
  * grants change without this list changing too.
  */
-const PLATFORM_OWNER = ["system.*", "platform.*"];
+const PLATFORM_OWNER = ["system.*", "platform.*", "pcc.*"];
 const PLATFORM_SUPPORT = [
   "system.tenant.read",
+  "system.tenant.lifecycle.read",
   "system.health.read",
+  "system.analytics.read",
   "platform.audit.read",
+  "system.support.read",
+  "system.audit.read",
+  "system.invoice.read",
+  "system.subscription.read",
+  "system.dunning.read",
+  "system.metering.read",
+  "system.quota.read",
+  "system.plan.read",
+  "system.flags.read",
+  "system.upgrade.read",
+  "system.migration.read",
+  "system.offboarding.read",
+  "system.import.read",
+  "system.broadcast.read",
+  "system.release.read",
+  "system.clusters.read",
+  "system.domain.read",
+  "system.whitelabel.read",
+  "system.residency.read",
+  "system.isolation.read",
+  "system.sla.read",
+  "system.backup.read",
+  "system.security.read",
+  "system.soc.read",
+  "system.operations.read",
 ];
 
 /** A customer's most privileged role. */
@@ -32,6 +59,7 @@ describe("control-plane role provisioning", () => {
       expect(hasPermission(PLATFORM_OWNER, "system.tenant.delete")).toBe(true);
       expect(hasPermission(PLATFORM_OWNER, "system.tenant.suspend")).toBe(true);
       expect(hasPermission(PLATFORM_OWNER, "platform.config.write")).toBe(true);
+      expect(hasPermission(PLATFORM_OWNER, "pcc.security.access")).toBe(true);
     });
 
     it("carries no tenant-business authority", () => {
@@ -113,6 +141,7 @@ describe("control-plane role provisioning", () => {
       expect(hasPermission(TENANT_SUPER_ADMIN, "platform.config.write")).toBe(
         false,
       );
+      expect(hasPermission(TENANT_SUPER_ADMIN, "pcc.security.access")).toBe(false);
     });
 
     it("still grants a customer Super Admin everything inside the tenant", () => {

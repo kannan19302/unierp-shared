@@ -84,6 +84,33 @@ export function parsePermission(permission: string): {
 }
 
 /**
+ * Normalize the historical shapes used by Prisma `Json` permission columns.
+ * Some writers stored a JSON array and older writers stored a JSON-encoded
+ * string. Invalid data is denied as an empty list; it is never interpreted as
+ * an authorization grant.
+ */
+export function parseRolePermissions(value: unknown): string[] {
+  let parsed = value;
+  if (typeof parsed === "string") {
+    try {
+      parsed = JSON.parse(parsed) as unknown;
+    } catch {
+      return [];
+    }
+  }
+
+  if (!Array.isArray(parsed)) return [];
+  return Array.from(
+    new Set(
+      parsed.filter(
+        (entry): entry is string =>
+          typeof entry === "string" && entry.trim().length > 0,
+      ),
+    ),
+  ).sort();
+}
+
+/**
  * Permission namespaces that belong to the CONTROL PLANE — the SaaS provider's
  * own operations (tenant lifecycle, platform billing, licensing, cross-tenant
  * analytics). See docs/PLATFORM_ARCHITECTURE.md § 3.
@@ -101,7 +128,7 @@ export function parsePermission(permission: string): {
  * therefore enumerate and modify every tenant on the platform. `*` means
  * "everything in MY tenant", never "everything on the platform".
  */
-export const CONTROL_PLANE_NAMESPACES = ["system", "platform"] as const;
+export const CONTROL_PLANE_NAMESPACES = ["system", "platform", "pcc"] as const;
 
 function isControlPlanePermission(permission: string): boolean {
   return CONTROL_PLANE_NAMESPACES.some(

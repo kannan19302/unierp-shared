@@ -1,6 +1,6 @@
 {
   "name": "@kannan19302/shared",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Shared types, validators, constants, and utilities",
   "type": "commonjs",
   "main": "dist/index.js",
@@ -41,6 +41,7 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
+    "@kannan19302/contracts": "file:../unierp-contracts",
     "date-fns": "^4.4.0",
     "date-fns-tz": "^3.2.0",
     "jose": "^5.9.6",

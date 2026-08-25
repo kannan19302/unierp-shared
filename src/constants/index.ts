@@ -135,3 +135,11 @@ export const DATE_FORMAT = "yyyy-MM-dd";
 export const DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 export const DISPLAY_DATE_FORMAT = "MMM dd, yyyy";
 export const DISPLAY_DATETIME_FORMAT = "MMM dd, yyyy HH:mm";
+
+// ── Provider identity realm ──
+// One canonical provider realm is shared by Identity, data seeds, and every
+// control-plane consumer. It is a system tenant used only because identity
+// records require a tenant key; it is never a billable customer organization.
+export const PROVIDER_REALM_TENANT_ID = "tnt-provider";
+export const PROVIDER_REALM_TENANT_SLUG = "provider";
+export const LEGACY_PROVIDER_REALM_TENANT_SLUG = "platform-control-plane";
