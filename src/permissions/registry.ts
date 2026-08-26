@@ -11785,6 +11785,22 @@ export const PERMISSION_REGISTRY: PermissionDefinition[] = [
     description: "Run control monitoring and export evidence artefacts from the audit spine (M38)",
   },
   {
+    code: "system.marketplace.read",
+    module: "system",
+    resource: "marketplace",
+    action: "read",
+    level: "endpoint",
+    description: "View marketplace extension listings and submissions",
+  },
+  {
+    code: "system.marketplace.write",
+    module: "system",
+    resource: "marketplace",
+    action: "write",
+    level: "endpoint",
+    description: "Publish, approve, reject and manage marketplace extension listings",
+  },
+  {
     code: "system.ai.read",
     module: "system",
     resource: "ai",
