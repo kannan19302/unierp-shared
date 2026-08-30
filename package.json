@@ -6,33 +6,38 @@
     "node": ">=22 <23"
   },
   "description": "Shared types, validators, constants, and utilities",
-  "type": "commonjs",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
       "require": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json",
     "./auth-client": {
       "types": "./dist/auth-client/index.d.ts",
+      "import": "./dist/auth-client/index.js",
       "require": "./dist/auth-client/index.js",
       "default": "./dist/auth-client/index.js"
     },
     "./auth-client/react": {
       "types": "./dist/auth-client/react.d.ts",
+      "import": "./dist/auth-client/react.js",
       "require": "./dist/auth-client/react.js",
       "default": "./dist/auth-client/react.js"
     },
     "./module-registry": {
       "types": "./dist/module-registry/index.d.ts",
+      "import": "./dist/module-registry/index.js",
       "require": "./dist/module-registry/index.js",
       "default": "./dist/module-registry/index.js"
     },
     "./blocks": {
       "types": "./dist/blocks/index.d.ts",
+      "import": "./dist/blocks/index.js",
       "require": "./dist/blocks/index.js",
       "default": "./dist/blocks/index.js"
     }
