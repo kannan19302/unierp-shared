@@ -40,7 +40,7 @@ function planeOne(
 
 /** App-entry permissions are derived from the L0 control-center catalogue. */
 function controlCenterAppAccessPermissions(): PermissionDefinition[] {
-  return CONTROL_CENTER_APPS.map((app) => {
+  return CONTROL_CENTER_APPS.map((app: any) => {
     const [module, resource] = app.permissionNamespace.split(".");
     if (!module || !resource) {
       throw new Error(
