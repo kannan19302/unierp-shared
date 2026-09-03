@@ -3,7 +3,7 @@ export type {
   CapabilityStatus,
   CredentialField,
   ResourceKind,
-} from "./types";
+} from "./types.js";
 export {
   registerCapability,
   unregisterCapability,
@@ -13,5 +13,5 @@ export {
   unbindProvider,
   resolve,
   __resetCapabilityRegistryForTests,
-} from "./registry";
-import "./catalogue";
+} from "./registry.js";
+import "./catalogue.js";

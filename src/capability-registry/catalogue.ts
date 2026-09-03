@@ -14,7 +14,7 @@
  * Importing this module registers its contents as a side effect, exactly as
  * `navigation.ts` (M01, unierp-console) registers its apps.
  */
-import { registerCapability } from "./registry";
+import { registerCapability } from "./registry.js";
 
 registerCapability({
   id: "email.send",

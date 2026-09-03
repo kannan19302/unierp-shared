@@ -12,7 +12,7 @@
  * a capability, which is what "reported as unsatisfied" needs to be true
  * before M03 exists at all.
  */
-import type { CapabilityContract, CapabilityStatus } from "./types";
+import type { CapabilityContract, CapabilityStatus } from "./types.js";
 
 const _capabilities = new Map<string, CapabilityContract>();
 const _providers = new Map<string, Set<string>>();

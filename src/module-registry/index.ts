@@ -2,11 +2,11 @@ export type {
   AppModuleDescriptor,
   ModuleNavContext,
   NavItem,
-} from "./types";
+} from "./types.js";
 export {
   registerModule,
   getModuleDescriptor,
   getAllModuleDescriptors,
   resolveNav,
   __resetModuleRegistryForTests,
-} from "./registry";
+} from "./registry.js";
