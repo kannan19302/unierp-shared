@@ -75,5 +75,5 @@ export function formatZonedDate(
   return formatInTimeZone(date, timeZone, formatString);
 }
 
-export * from "./effective-dating";
+export * from "./effective-dating.js";
 
