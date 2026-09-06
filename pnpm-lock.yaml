@@ -239,6 +239,7 @@ packages:
 
   '@kannan19302/contracts@file:../unierp-contracts':
     resolution: {directory: ../unierp-contracts, type: directory}
+    engines: {node: '>=22 <23'}
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     resolution: {integrity: sha512-oTXEIha4SsuXdTA4Iyskj0kpdx2yVXdhd75c2v3xGrHFfVMsbhTPZU/nMPL4sWKo4pBHm3aucLaqGlF696dTyQ==}
@@ -946,7 +947,9 @@ snapshots:
 
   '@kannan19302/config@1.0.2': {}
 
-  '@kannan19302/contracts@file:../unierp-contracts': {}
+  '@kannan19302/contracts@file:../unierp-contracts':
+    dependencies:
+      zod: 3.25.76
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true
