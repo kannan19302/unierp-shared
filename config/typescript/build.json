@@ -1,0 +1,23 @@
+{
+  "extends": "./base.json",
+  "compilerOptions": {
+    "paths": {
+      "@kannan19302/ui": ["../../ui/dist/index.d.ts"],
+      "@kannan19302/shared": ["../../shared/dist/index.d.ts"],
+      "@kannan19302/auth": ["../../auth/dist/index.d.ts"],
+      "@kannan19302/ui/tokens": ["../../ui/dist/tokens/index.d.ts"],
+      "@kannan19302/ui/theme": ["../../ui/dist/theme/index.d.ts"],
+      "@kannan19302/ui/components": ["../../ui/dist/components/index.d.ts"],
+      "@kannan19302/ui/layout": ["../../ui/dist/layout/index.d.ts"],
+      "@kannan19302/ui/charts": ["../../ui/dist/charts/index.d.ts"],
+      "@kannan19302/ui/data-grid": ["../../ui/dist/data-grid/index.d.ts"],
+      "@kannan19302/ui/dashboard": ["../../ui/dist/dashboard/index.d.ts"],
+      "@kannan19302/ui/notifications": ["../../ui/dist/notifications/index.d.ts"],
+      "@kannan19302/ui/hooks": ["../../ui/dist/hooks/index.d.ts"],
+      "@kannan19302/ui/utils": ["../../ui/dist/utils/index.d.ts"],
+      "@kannan19302/ui/icons": ["../../ui/dist/icons/index.d.ts"],
+      "@kannan19302/ui/form-engine": ["../../ui/dist/form-engine/index.d.ts"],
+      "@kannan19302/ui/workflow": ["../../ui/dist/workflow/index.d.ts"]
+    }
+  }
+}

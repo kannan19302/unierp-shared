@@ -1,0 +1,17 @@
+{
+  "name": "@kannan19302/config",
+  "version": "1.0.2",
+  "packageManager": "pnpm@9.15.4",
+  "engines": {
+    "node": ">=22 <23"
+  },
+  "description": "Shared configuration for ESLint, TypeScript, and Prettier",
+  "files": [
+    "typescript",
+    "prettier",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node -e \"console.log('@kannan19302/config ships configuration only — nothing to build')\""
+  }
+}
