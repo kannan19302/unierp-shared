@@ -1,11 +1,17 @@
 ---
 name: shared-standards
-description: Authoritative standards, architectural boundaries, coding anatomy, and verification gates for shared.
+description: Repository guidance, architectural context, and verification routing for shared.
 version: 1.0.0
 author: UniERP Architecture Governance
 ---
 
 # UniERP Shared Utilities — AI Agent Guidance & Project Skill
+
+Read the [applicable AGENTS.md](../../../AGENTS.md) first. This skill is subordinate implementation guidance.
+Resolve ownership and current topology through that entrypoint; examples and performance aspirations are not
+verified product facts. Select verification from the owning package scripts and canonical risk matrix.
+The commands below are not a complete substitute for applicable security, integration, lint or build gates.
+
 
 This skill governs all code modification, analysis, and testing within `shared` (**Layer L1: Foundation**). Every AI agent and software engineer working in this repository MUST follow these rules without exception.
 
